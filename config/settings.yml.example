@@ -1,3 +1,6 @@
 devices:
   soundbar:
     ip: 192.168.0.1
+authentication:
+  user: admin
+  password: changeme
