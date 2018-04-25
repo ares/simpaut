@@ -1,6 +1,12 @@
 devices:
   soundbar:
     ip: 192.168.0.1
+    type: samsung_wam
+  projector:
+      type: lirc_device
+      remote_name: BENQ_W750
+      on_key_name: KEY_POWER
+      off_key_name: KEY_SUSPEND
 authentication:
   user: admin
   password: changeme

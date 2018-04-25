@@ -1,7 +1,15 @@
 class DeviceMapper
   def self.find_by_name(name, logger)
     attrs = Configuration.devices[name.to_s]
+    attrs = attrs.symbolize_keys
     attrs[:logger] = logger
-    SamsungWamApi::Device.new(attrs.symbolize_keys)
+    case attrs.delete(:type)
+    when 'samsung_wam'
+      SamsungWamApi::Device.new(attrs)
+    when 'lirc_device'
+      LircDevice.new(attrs)
+    else
+      raise 'Unknown device type'
+    end
   end
 end

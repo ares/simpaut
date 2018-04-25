@@ -2,6 +2,7 @@ require 'sinatra'
 require 'samsung_wam_api'
 require 'simpaut/configuration'
 require 'simpaut/device_mapper'
+require 'simpaut/lirc_device'
 
 use Rack::Auth::Basic, "Restricted Area" do |username, password|
   username == Configuration.authentication['user'] and password == Configuration.authentication['password']
@@ -13,25 +14,29 @@ end
 
 get '/:device/on' do
   load_device
-  @device.on! unless @device.on?
+  @device.on! if !@device.respond_to?(:power_status) || !@device.on?
   response
 end
 
 get '/:device/off' do
   load_device
-  @device.off! unless @device.off?
+  @device.off! if !@device.respond_to?(:power_status) || !@device.off?
   response
 end
 
 get '/:device/volume_up' do
   load_device
-  @device.increase_volume if @device.on?
+  return unsupported unless @device.respond_to?(:increase_volume)
+
+  @device.increase_volume if @device.respond_to?(:power_status) && @device.on?
   response
 end
 
 get '/:device/volume_down' do
   load_device
-  @device.decrease_volume if @device.on?
+  return unsupported unless @device.respond_to?(:decrease_volume)
+
+  @device.decrease_volume if @device.respond_to?(:power_status) && @device.on?
   response
 end
 
@@ -41,4 +46,8 @@ end
 
 def response
   'ok'
+end
+
+def unsupported
+  'unsupported'
 end
