@@ -3,6 +3,7 @@ require 'samsung_wam_api'
 require 'simpaut/configuration'
 require 'simpaut/device_mapper'
 require 'simpaut/lirc_device'
+require 'simpaut/local_device'
 
 use Rack::Auth::Basic, "Restricted Area" do |username, password|
   username == Configuration.authentication['user'] and password == Configuration.authentication['password']

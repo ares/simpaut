@@ -8,6 +8,8 @@ class DeviceMapper
       SamsungWamApi::Device.new(attrs)
     when 'lirc_device'
       LircDevice.new(attrs)
+    when 'local_device'
+      LocalDevice.new(attrs)
     else
       raise 'Unknown device type'
     end
