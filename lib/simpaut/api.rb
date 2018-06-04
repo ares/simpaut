@@ -42,7 +42,7 @@ get '/:device/volume_down' do
 end
 
 def load_device
-  @device = DeviceMapper.find_by_name(params[:device], logger)
+  @device = DeviceMapper.find_by_name(params[:device], logger, params)
 end
 
 def response

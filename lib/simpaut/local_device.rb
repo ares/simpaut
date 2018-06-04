@@ -1,15 +1,16 @@
 require 'shellwords'
+require 'simpaut/device'
 
-class LocalDevice
-  def initialize(on_command:, off_command:, logger: Logger.new(STDOUT), env: '')
+class LocalDevice < Device
+  def initialize(on_command:, off_command:, env: '', **args)
+    super(**args)
     @on_command = on_command
     @off_command = off_command
     @env = env
-    @logger = logger
   end
 
   def on!
-    command!(@on_command)
+    command!(@on_command) if video_content? || unknown_content?
   end
 
   def off!

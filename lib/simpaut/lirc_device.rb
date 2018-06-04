@@ -1,11 +1,12 @@
 require 'shellwords'
+require 'simpaut/device'
 
-class LircDevice
-  def initialize(remote_name:, on_key_name:, off_key_name:, logger: Logger.new(STDOUT))
+class LircDevice < Device
+  def initialize(remote_name:, on_key_name:, off_key_name:, **args)
+    super(**args)
     @remote_name = remote_name
     @on_key = on_key_name
     @off_key = off_key_name
-    @logger = logger
   end
 
   def on!

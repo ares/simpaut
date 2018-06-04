@@ -1,5 +1,5 @@
 class DeviceMapper
-  def self.find_by_name(name, logger)
+  def self.find_by_name(name, logger, params)
     attrs = Configuration.devices[name.to_s]
     attrs = attrs.symbolize_keys
     attrs[:logger] = logger
@@ -7,9 +7,9 @@ class DeviceMapper
     when 'samsung_wam'
       SamsungWamApi::Device.new(attrs)
     when 'lirc_device'
-      LircDevice.new(attrs)
+      LircDevice.new(attrs.merge(:params => params))
     when 'local_device'
-      LocalDevice.new(attrs)
+      LocalDevice.new(attrs.merge(:params => params))
     else
       raise 'Unknown device type'
     end
