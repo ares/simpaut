@@ -41,6 +41,20 @@ get '/:device/volume_down' do
   response
 end
 
+get '/:device/volume' do
+  load_device
+  return unsupported unless @device.respond_to?(:volume)
+
+  @device.volume
+end
+
+get '/:device/status' do
+  load_device
+  return unsupported unless @device.respond_to?(:status)
+
+  @device.status
+end
+
 def load_device
   @device = DeviceMapper.find_by_name(params[:device], logger, params)
 end
