@@ -45,14 +45,22 @@ get '/:device/volume' do
   load_device
   return unsupported unless @device.respond_to?(:volume)
 
-  @device.volume
+  @device.volume.to_s
+end
+
+get '/:device/set_volume/:volume' do
+  load_device
+  return unsupported unless @device.respond_to?(:set_volume)
+
+  @device.set_volume(params[:volume])
+  response
 end
 
 get '/:device/status' do
   load_device
-  return unsupported unless @device.respond_to?(:status)
+  return unsupported unless @device.respond_to?(:power_status)
 
-  @device.status
+  @device.power_status.to_s
 end
 
 def load_device
