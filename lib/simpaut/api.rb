@@ -20,9 +20,21 @@ get '/:device/on' do
   response
 end
 
+get '/:device/kodi_on' do
+  load_device
+  @device.kodi_on! if @device.respond_to?(:kodi_on!)
+  response
+end
+
 get '/:device/off' do
   load_device
   @device.off! if !@device.respond_to?(:power_status) || !@device.off?
+  response
+end
+
+get '/:device/kodi_off' do
+  load_device
+  @device.kodi_off! if @device.respond_to?(:kodi_off!)
   response
 end
 
