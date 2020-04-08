@@ -1,9 +1,10 @@
 require 'sinatra'
 require 'samsung_wam_api'
 require 'simpaut/configuration'
-require 'simpaut/device_mapper'
+require 'simpaut/samsung_wam_device'
 require 'simpaut/lirc_device'
 require 'simpaut/local_device'
+require 'simpaut/device_mapper'
 
 use Rack::Auth::Basic, "Restricted Area" do |username, password|
   username == Configuration.authentication['user'] and password == Configuration.authentication['password']
@@ -61,6 +62,48 @@ get '/:device/status' do
   return unsupported unless @device.respond_to?(:power_status)
 
   @device.power_status.to_s
+end
+
+get '/:device/input' do
+  load_device
+  return unsupported unless @device.respond_to?(:input)
+
+  @device.input
+end
+
+get '/:device/set_input/:input' do
+  load_device
+  return unsupported unless @device.respond_to?(:set_input!)
+
+  @device.set_input!(params[:input])
+end
+
+get '/:device/audio_info' do
+  load_device
+  return unsupported unless @device.respond_to?(:audio_info)
+
+  @device.audio_info
+end
+
+get '/:device/cloud_username' do
+  load_device
+  return unsupported unless @device.respond_to?(:cloud_username)
+
+  @device.cloud_username
+end
+
+get '/:device/play_info' do
+  load_device
+  return unsupported unless @device.respond_to?(:play_info)
+
+  @device.play_info
+end
+
+get '/:device/cloud_provider_info' do
+  load_device
+  return unsupported unless @device.respond_to?(:cloud_provider_info)
+
+  @device.cloud_provider_info
 end
 
 def load_device

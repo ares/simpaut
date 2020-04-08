@@ -5,7 +5,7 @@ class DeviceMapper
     attrs[:logger] = logger
     case attrs.delete(:type)
     when 'samsung_wam'
-      SamsungWamApi::Device.new(attrs)
+      SamsungWamDevice.new(attrs)
     when 'lirc_device'
       LircDevice.new(attrs.merge(:params => params))
     when 'local_device'

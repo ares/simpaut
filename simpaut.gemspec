@@ -26,5 +26,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "minitest", "~> 5.0"
 
   spec.add_dependency 'sinatra'
-  spec.add_dependency 'samsung_wam_api'
+  spec.add_dependency 'samsung_wam_api', ">= 0.1.2"
 end
