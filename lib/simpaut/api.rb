@@ -4,6 +4,7 @@ require 'simpaut/configuration'
 require 'simpaut/samsung_wam_device'
 require 'simpaut/lirc_device'
 require 'simpaut/local_device'
+require 'simpaut/mopidy_device'
 require 'simpaut/device_mapper'
 
 use Rack::Auth::Basic, "Restricted Area" do |username, password|
@@ -35,6 +36,18 @@ end
 get '/:device/kodi_off' do
   load_device
   @device.kodi_off! if @device.respond_to?(:kodi_off!)
+  response
+end
+
+get '/:device/alarm_on' do
+  load_device
+  @device.alarm_on!
+  response
+end
+
+get '/:device/alarm_off' do
+  load_device
+  @device.alarm_off!
   response
 end
 

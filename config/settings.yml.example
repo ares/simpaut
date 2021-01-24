@@ -3,10 +3,14 @@ devices:
     ip: 192.168.0.1
     type: samsung_wam
   projector:
-      type: lirc_device
-      remote_name: BENQ_W750
-      on_key_name: KEY_POWER
-      off_key_name: KEY_SUSPEND
+    type: lirc_device
+    remote_name: BENQ_W750
+    on_key_name: KEY_POWER
+    off_key_name: KEY_SUSPEND
+  rpi:
+    type: mopidy_device
+    alarm_sound_file: '/home/pi/alarm_fast_short_loud.mp3'
+    mopidy_host: '192.168.0.2'
 authentication:
   user: admin
   password: changeme

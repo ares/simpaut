@@ -1,3 +1,5 @@
+require 'active_support/core_ext/hash/indifferent_access'
+
 class DeviceMapper
   def self.find_by_name(name, logger, params)
     attrs = Configuration.devices[name.to_s]
@@ -10,6 +12,8 @@ class DeviceMapper
       LircDevice.new(attrs.merge(:params => params))
     when 'local_device'
       LocalDevice.new(attrs.merge(:params => params))
+    when 'mopidy_device'
+      MopidyDevice.new(attrs.merge(:params => params))
     else
       raise 'Unknown device type'
     end
